@@ -1,0 +1,82 @@
+{% extends 'FrequenceWebDashboardBundle::admin.html.twig' %}
+
+{%- macro repeat(what, nb) %}
+    {%- for i in 0..nb %}
+        {{ what | raw }}
+    {%- endfor %}
+{%- endmacro %}
+
+{% block body %}
+    <h1>Gestion du menu</h1>
+
+    <table class="table table-bordered table-striped node-list table-condensed">
+        <thead>
+            <tr>
+                <th class="node-id">N°</th>
+                <th class="node-title">Nom</th>
+                <th class="node-actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for node in nodes %}
+                <tr>
+                    <td class="node-id">#{{ node.id }}</td>
+                    <td class="node-title">{{ _self.repeat('&middot; &middot; ', node.level) }}{{ node.title }}</td>
+                    <td class="node-actions">
+                        <a class="btn btn-mini"
+                           href="{{ path('soloist_admin_node_edit', node.routeParams) }}">
+                            <i class="icon-cog"></i> Editer
+                        </a>
+                        <a class="btn btn-mini btn-danger ask-delete"
+                           href="{{ path('soloist_admin_node_delete', node.routeParams) }}">
+                            <i class="icon-trash icon-white"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="form-actions">
+        <div class="btn-group">
+            <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
+                Nouveau
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a id="soloist_category_new" href="{{ path('soloist_admin_node_new', {type: 'category'}) }}">
+                        Catégorie
+                    </a>
+                </li>
+                <li>
+                    <a id="soloist_shortcut_new" href="{{ path('soloist_admin_node_new', {type: 'shortcut'}) }}">
+                        Raccourci
+                    </a>
+                </li>
+                <li>
+                    <a id="soloist_link_new" href="{{ path('soloist_admin_node_new', {type: 'link'}) }}">
+                        Lien (externe)
+                    </a>
+                </li>
+                <li>
+                    <a id="soloist_page_new" href="{{ path('soloist_admin_node_new', {type: 'page'}) }}">
+                        Page
+                    </a>
+                </li>
+                <li>
+                    <a id="soloist_action_new" href="{{ path('soloist_admin_node_new', {type: 'action'}) }}">
+                        Action
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block aside %}
+<dl>
+    <dt><span class="label">Nombre d'éléments</span></dt>
+    <dd>{{ nodes | length }}</dd>
+</dl>
+{% endblock %}

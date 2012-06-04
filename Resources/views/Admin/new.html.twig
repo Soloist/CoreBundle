@@ -1,0 +1,24 @@
+{% extends 'FrequenceWebDashboardBundle::admin.html.twig' %}
+
+{% block body %}
+   <h1>Ajouter un élément dans le menu</h1>
+
+    <form class="form-horizontal" method="POST" action="{{ path('soloist_admin_node_create', {type: type}) }}">
+        <fieldset>
+            {% include 'SoloistCoreBundle:Admin:form.html.twig' %}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="soloist_node_create">Créer la page</button>
+                <a href="{{ path('soloist_admin_node_index') }}" class="btn">Annuler</a>
+            </div>
+        </fieldset>
+    </form>
+
+{% endblock %}
+
+{% block aside %}
+<dl>
+    <dt><span class="label">Nouvel élément de type</span></dt>
+    <dd>{{ type }}</dd>
+</dl>
+{% endblock %}

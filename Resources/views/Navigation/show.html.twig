@@ -1,0 +1,15 @@
+{% macro display_tree(nodes) %}
+    <ul>
+        {% for node in nodes %}
+            <li>
+                <a href="#">{{ node.title | nl2br }}</a>
+                {% if node.__children is defined %}
+                    {{ _self.display_tree(node.__children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{{ _self.display_tree(nodes.0.__children) }}
+

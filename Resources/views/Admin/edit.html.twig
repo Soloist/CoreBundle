@@ -1,0 +1,31 @@
+{% extends 'FrequenceWebDashboardBundle::admin.html.twig' %}
+
+{% block body %}
+    <h1>Editer l'élément "{{ node.title }}"</h1>
+
+    <form class="form-horizontal" method="POST" action="{{ path('soloist_admin_node_update', node.routeParams) }}">
+        <fieldset>
+
+            {% include 'SoloistCoreBundle:Admin:form.html.twig' with {type: node.type } %}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="soloist_node_update">Mettre à jour</button>
+                <a href="{{ path('soloist_admin_node_delete', node.routeParams) }}"
+                   class="btn btn-danger">Supprimer <i class="icon-trash icon-white"></i></a>
+                <a href="{{ path('soloist_admin_node_index') }}" class="btn">Annuler</a>
+            </div>
+        </fieldset>
+    </form>
+
+{% endblock %}
+
+{% block aside %}
+<dl>
+    <dt><span class="label">Elément de type</span></dt>
+    <dd>{{ node.type }}</dd>
+    <dt><span class="label">Créé le </span></dt>
+    <dd> {{ node.createdAt | date('d/m/Y H:i:s') }}</dd>
+    <dt><span class="label">Modifié le </span></dt>
+    <dd> {{ node.updatedAt | date('d/m/Y H:i:s') }}</dd>
+</dl>
+{% endblock %}

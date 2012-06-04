@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+
+    <parameters>
+        <parameter key="soloist.node.form.handler.class">Soloist\Bundle\CoreBundle\Form\Handler\Node</parameter>
+        <parameter key="soloist.node.factory.class">Soloist\Bundle\CoreBundle\Node\Factory</parameter>
+        <parameter key="soloist.block.factory.class">Soloist\Bundle\CoreBundle\Block\Factory</parameter>
+        <parameter key="soloist.page.form.type.class">Soloist\Bundle\CoreBundle\Form\Type\PageType</parameter>
+        <parameter key="soloist.core.listener.menu.class">Soloist\Bundle\CoreBundle\EventListener\DashboardListener</parameter>
+        <parameter key="soloist.core.listener.block.class">Soloist\Bundle\CoreBundle\EventListener\BlockListener</parameter>
+        <parameter key="soloist.core.twig.extension.class">Soloist\Bundle\CoreBundle\Twig\Extension</parameter>
+        <parameter key="soloist.core.form.type.json_array.class">Soloist\Bundle\CoreBundle\Form\Type\JsonArrayType</parameter>
+        <parameter key="soloist.core.router.class">Soloist\Bundle\CoreBundle\Router</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="soloist.page.form.type" class="%soloist.page.form.type.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="soloist.block.factory" />
+        </service>
+
+        <service id="soloist.node.form.handler" class="%soloist.node.form.handler.class%">
+            <argument type="service" id="soloist.node.factory" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="form.factory" />
+        </service>
+
+        <service id="soloist.node.factory" class="%soloist.node.factory.class%">
+            <argument type="service" id="soloist.block.factory" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="soloist.block.factory" class="%soloist.block.factory.class%" />
+
+        <service id="soloist.core.listener.menu" class="%soloist.core.listener.menu.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.new"  method="onConfigureNewMenu" />
+            <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.top"  method="onConfigureTopMenu" />
+            <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.left" method="onConfigureLeftMenu" />
+        </service>
+
+        <service id="soloist.core.listener.block" class="%soloist.core.listener.block.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="soloist_block.request_types"  method="onRequestTypes" />
+        </service>
+
+        <service id="soloist.core.twig.extension" class="%soloist.core.twig.extension.class%">
+            <argument type="service" id="soloist.block.factory" />
+            <argument type="service" id="soloist.core.router" />
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="soloist.core.form.type.json_array" class="%soloist.core.form.type.json_array.class%">
+            <tag name="form.type" alias="json_array" />
+        </service>
+
+        <service id="soloist.core.router" class="%soloist.core.router.class%">
+            <argument type="service" id="router" />
+        </service>
+
+    </services>
+
+</container>

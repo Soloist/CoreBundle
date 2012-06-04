@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="Soloist\Bundle\CoreBundle\Entity\ImageBlock">
+
+        <field name="title"      column="title"        type="string"  />
+        <field name="path"       column="path"        type="string"  />
+
+    </entity>
+
+
+</doctrine-mapping>

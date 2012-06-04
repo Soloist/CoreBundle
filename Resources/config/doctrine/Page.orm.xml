@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="Soloist\Bundle\CoreBundle\Entity\Page">
+
+        <field name="slug" type="string" length="150" unique="true">
+            <gedmo:slug unique="true" style="default" updatable="false" separator="-" fields="title" />
+        </field>
+
+        <field name="pageType" column="page_type" length="31" />
+
+        <one-to-many field="blocks" target-entity="Soloist\Bundle\CoreBundle\Entity\Block" mapped-by="page">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+    </entity>
+
+</doctrine-mapping>

@@ -1,0 +1,15 @@
+{% twig_js name="modal" %}
+<div class="modal" id="soloist-modal">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>{% block title %}{% endblock %}</h3>
+    </div>
+    <div class="modal-body">
+        {% block body %}{% endblock %}
+    </div>
+    <div class="modal-footer">
+        {% block actions %}
+            <a href="#" class="btn" data-dismiss="modal">Fermer</a>
+        {% endblock %}
+    </div>
+</div>

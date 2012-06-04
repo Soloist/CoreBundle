@@ -1,0 +1,24 @@
+{% twig_js name="action_modal" %}
+{% extends 'SoloistCoreBundle:Js:modal.html.twig' %}
+
+{% block title %}Liste des actions disponibles{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>Nom</td>
+                <td>Ajouter</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for action in actions %}
+                <tr data-label="{{ action.label }}" data-action="{{ action.action }}"
+                    data-params="{{ action.params }}">
+                    <td class="action-label">{{ action.label }}</td>
+                    <td class="action-choose"><a class="btn">Choisir</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

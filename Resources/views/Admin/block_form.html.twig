@@ -1,0 +1,6 @@
+{%- if form.blocks is defined %}
+    {%- for key, block in form.blocks %}
+        {{ soloist_block_form(node.getBlock(key).type, {form: block, block: node.getBlock(key)}) }}
+    {%- endfor %}
+{%- endif %}
+

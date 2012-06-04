@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <!-- Frontend actions -->
+    <route id="soloist_index" pattern="/">
+        <default key="_controller">SoloistCoreBundle:Default:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+    <route id="soloist_show" pattern="/{slug}.html">
+        <default key="_controller">SoloistCoreBundle:Default:show</default>
+        <requirement key="_method">GET</requirement>
+        <requirement key="slug">.*</requirement>
+    </route>
+
+    <!-- Node CRUD -->
+    <route id="soloist_admin_node_index" pattern="/admin/soloist/page">
+        <default key="_controller">SoloistCoreBundle:Admin:index</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+    <route id="soloist_admin_node_new" pattern="/admin/soloist/{type}/new">
+        <default key="_controller">SoloistCoreBundle:Admin:new</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+    <route id="soloist_admin_node_create" pattern="/admin/soloist/{type}/new">
+        <default key="_controller">SoloistCoreBundle:Admin:create</default>
+        <requirement key="_method">POST</requirement>
+    </route>
+    <route id="soloist_admin_node_edit" pattern="/admin/soloist/{type}/{id}">
+        <default key="_controller">SoloistCoreBundle:Admin:edit</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+    <route id="soloist_admin_node_update" pattern="/admin/soloist/{type}/{id}">
+        <default key="_controller">SoloistCoreBundle:Admin:update</default>
+        <requirement key="_method">POST</requirement>
+    </route>
+    <route id="soloist_admin_node_delete" pattern="/admin/soloist/{type}/{id}/delete">
+        <default key="_controller">SoloistCoreBundle:Admin:delete</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+    <!-- Ajax block retrieving -->
+    <route id="soloist_admin_block_get" pattern="/admin/soloist/blocks">
+        <default key="_controller">SoloistCoreBundle:Admin:retrieveBlockForm</default>
+        <requirement key="_method">POST</requirement>
+    </route>
+    <route id="soloist_admin_actions_get" pattern="/admin/soloist/actions.json">
+        <default key="_controller">SoloistCoreBundle:Admin:retrieveActions</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
+</routes>
