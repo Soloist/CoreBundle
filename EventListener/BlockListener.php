@@ -25,10 +25,11 @@ class BlockListener
         $event->getManager()
             // Add last_news block
             ->addBlockType('page_shortcut', array(
-                'name'     => 'Raccourcis de page',
-                'action'   => 'SoloistCoreBundle:Default:pageShortcut',
-                'settings' => array('page' => null),
-                'form'     => new PageShortcutType($this->em)
+                'name'          => 'Raccourcis de page',
+                'action'        => 'SoloistCoreBundle:Default:pageShortcut',
+                'settings'      => array('page' => null, 'path_image' => null, 'description' => null),
+                'form'          => new PageShortcutType($this->em),
+                'form_template' => 'SoloistCoreBundle:AdminBlock:configurePageShortcut.html.twig'
             ))
         ;
     }

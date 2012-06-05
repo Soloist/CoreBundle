@@ -2,6 +2,8 @@
 
 namespace Soloist\Bundle\CoreBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Soloist\Bundle\CoreBundle\Entity\Action,
@@ -38,5 +40,21 @@ class DefaultController extends Controller
     public function showActionAction(Action $action)
     {
         return $this->forward($action->getAction(), $action->getParams());
+    }
+
+    /**
+     * @Template()
+     * @param $page
+     * @param $path_image
+     * @param $description
+     * @return array
+     */
+    public function pageShortcutAction($page, $path_image, $description)
+    {
+        return array(
+            'page'        => $this->getDoctrine()->getRepository('SoloistCoreBundle:Page')->find($page),
+            'image'       => $path_image,
+            'description' => $description,
+        );
     }
 }

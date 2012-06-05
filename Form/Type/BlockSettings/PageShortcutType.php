@@ -29,6 +29,8 @@ class PageShortcutType extends AbstractType implements DataTransformerInterface
             ->add('page', 'entity', array(
                 'class'  => 'SoloistCoreBundle:Page'
             ))
+            ->add('path_image')
+            ->add('description', 'textarea')
         ;
     }
 

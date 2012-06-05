@@ -1,0 +1,19 @@
+{% extends 'SoloistBlockBundle:AdminBlock:configure.html.twig' %}
+
+{% block form %}
+
+    <div class="thumbnail">
+        <div class="thumbnail-subject">
+            {% if block.settings.path_image %}
+                <img src="{{ block.settings.path_image | apply_filter('soloist_admin_media') }}" />
+            {% endif %}
+        </div>
+        <div class="caption">
+            {{ form_widget(form.path_image) }}
+            <a href="{{ path('soloist_admin_media_index') }}?nolayout" class="btn soloist-media-add">Choisir une image</a>
+        </div>
+    </div>
+
+    {{ form_rest(form) }}
+
+{% endblock %}
