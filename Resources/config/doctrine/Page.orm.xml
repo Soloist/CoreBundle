@@ -8,7 +8,7 @@
             <gedmo:slug unique="true" style="default" updatable="false" separator="-" fields="title" />
         </field>
 
-        <field name="pageType" column="page_type" length="31" />
+        <field name="pageType" column="page_type" length="63" />
 
         <one-to-many field="blocks" target-entity="Soloist\Bundle\CoreBundle\Entity\Block" mapped-by="page">
             <cascade>
