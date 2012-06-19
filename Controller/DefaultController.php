@@ -2,16 +2,12 @@
 
 namespace Soloist\Bundle\CoreBundle\Controller;
 
+use Doctrine\Common\Util\Inflector;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Soloist\Bundle\CoreBundle\Entity\Action,
     Soloist\Bundle\CoreBundle\Entity\Page,
     Soloist\Bundle\CoreBundle\Entity\Node;
-
-use Doctrine\Common\Util\Inflector;
-
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {

@@ -2,6 +2,7 @@
 
 namespace Soloist\Bundle\CoreBundle\Entity\Repository;
 
+use Doctrine\ORM\Query\Expr;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class Node extends NestedTreeRepository

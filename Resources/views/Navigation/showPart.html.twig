@@ -1,0 +1,20 @@
+{% macro display_tree(nodes, current) %}
+    <ul>
+        {% for node in nodes %}
+            <li{{ node.id == current.id ? ' class="current"' : '' }}>
+                <a href="{{ soloist_path(node) }}">{{ node.title | nl2br }}</a>
+                {% if node.__children is defined %}
+                    {{ _self.display_tree(node.__children, current) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+<nav>
+    <h3{{ root.id == current.id ? ' class="current"' : '' }}>
+        <a href="{{ soloist_path(root) }}">{{ root.title | nl2br }}</a>
+    </h3>
+    {{ _self.display_tree(nodes, current) }}
+</nav>
+
