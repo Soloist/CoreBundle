@@ -2,6 +2,8 @@
 
 namespace Soloist\Bundle\CoreBundle\Entity;
 
+use HtmlTools\Helpers;
+
 class TextBlock extends Block
 {
     /**
@@ -12,9 +14,9 @@ class TextBlock extends Block
     /**
      * @param string $value
      */
-    public function setValue($value)
+    public function setValue($value, $raw = false)
     {
-        $this->value = $value;
+        $this->value = $raw ? $value : Helpers::addHeadingsId($value);
     }
 
     /**
