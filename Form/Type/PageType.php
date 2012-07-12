@@ -37,6 +37,7 @@ class PageType extends NodeType
                 'choice_list' => new SimpleChoiceList($this->factory->getPageTypes())
             ))
             ->add('blocks', new BlockCollectionType, array('block_factory' => $this->factory))
+            ->add('tagsAsText', 'text')
         ;
     }
 

@@ -3,8 +3,9 @@
 namespace Soloist\Bundle\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use DoctrineExtensions\Taggable\Taggable;
 
-class Page extends Node
+class Page extends Node implements Taggable
 {
 
     /**
@@ -27,9 +28,22 @@ class Page extends Node
      */
     protected $blocks;
 
+    /**
+     * Tags managed by FPNTagBundle
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $tags;
+
+    /**
+     * Tas as text
+     * @var string
+     */
+    public $tagsAsText;
+
     public function __construct()
     {
         $this->blocks = new ArrayCollection;
+        $this->tags =   new ArrayCollection;
     }
 
     /**
@@ -111,6 +125,35 @@ class Page extends Node
         }
 
         $this->blocks = $blocks;
+    }
+
+    /**
+     * Get tags
+     * @return ArrayCollection
+     */
+    public function getTags()
+    {
+        $this->tags = $this->tags ?: new ArrayCollection();
+
+        return $this->tags;
+    }
+
+    /**
+     * Get tag type
+     * @return string
+     */
+    public function getTaggableType()
+    {
+        return 'soloist_tag';
+    }
+
+    /**
+     * Get id of the current entity
+     * @return integer
+     */
+    public function getTaggableId()
+    {
+        return $this->getId();
     }
 
 }

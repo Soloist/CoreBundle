@@ -16,6 +16,8 @@
             </cascade>
         </one-to-many>
 
+        <many-to-many field="tags" target-entity="Soloist\Bundle\CoreBundle\Entity\Tag" />
+
     </entity>
 
 </doctrine-mapping>
