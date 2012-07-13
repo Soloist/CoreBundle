@@ -29,6 +29,7 @@
             <argument type="service" id="soloist.node.factory" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="form.factory" />
+            <argument type="service" id="fpn_tag.tag_manager" />
         </service>
 
         <service id="soloist.node.factory" class="%soloist.node.factory.class%">
