@@ -54,12 +54,11 @@ class Node
             $data = $form->getData();
 
             if ($data instanceof Taggable) {
-                $tags = explode(',', $data->tagsAsText);
-                $tags = $this->trimTags($tags);
-                foreach ($tags as $tag) {
-                    $currentTag = $this->tagManager->loadOrCreateTag($tag);
-                    $this->tagManager->addTag($currentTag, $data);
-                }
+
+                $tags = $this->tagManager->splitTagNames($data->tagsAsText);
+
+                $tags = $this->tagManager->loadOrCreateTags($tags);
+                $this->tagManager->addTags($tags, $data);
             }
 
             $this->em->persist($data);
@@ -78,7 +77,7 @@ class Node
         $data = $form->getData();
         $oldTags = null;
         if ($data instanceof Taggable) {
-            $oldTags = explode(',', $data->tagsAsText);
+            $oldTags = $this->tagManager->splitTagNames($data->tagsAsText);
         }
 
         $form->bindRequest($request);
@@ -87,17 +86,19 @@ class Node
             // if entity is taggable, we should remove old tags
             // and add new
             if ($data instanceof Taggable) {
-                $tags = explode(',', $data->tagsAsText);
-                $oldTags = $this->trimTags($oldTags);
-                $Tags = $this->trimTags($Tags);
+
+                $tags = $this->tagManager->splitTagNames($data->tagsAsText);
 
                 foreach ($tags as $key => $tag) {
-                    if(!in_array($tag, $oldTags)) {
+                    if (!in_array($tag, $oldTags)) {
                         $currentTag = $this->tagManager->loadOrCreateTag($tag);
                         $this->tagManager->addTag($currentTag, $data);
 
                     } else {
-                        unset($oldTags[$key]);
+                        if ($key = array_search($tag, $oldTags)) {
+                            unset($oldTags[$key]);
+                        }
+
                     }
                 }
 
@@ -108,6 +109,8 @@ class Node
             }
 
             $this->em->flush();
+
+            $tagManager->saveTagging($data);
 
             return true;
         }
@@ -120,6 +123,7 @@ class Node
         $node = $this->nodeFactory->getNode($type, $pageType);
 
         if ($node instanceof Taggable) {
+            $this->tagManager->loadTagging($node);
             $text = '';
             foreach($node->getTags() as $tag) {
                 if($text !== '') {
@@ -140,15 +144,5 @@ class Node
         $form = $this->nodeFactory->getFormType($node->getType(), $node);
 
         return $this->factory->create($form, $node);
-    }
-
-    public function trimTags()
-    {
-        $res = array();
-        foreach ($tags as $tag) {
-            $res = trim($tag);
-        }
-
-        return $res;
     }
 }
