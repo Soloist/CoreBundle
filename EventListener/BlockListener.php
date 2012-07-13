@@ -31,6 +31,13 @@ class BlockListener
                 'form'          => new PageShortcutType($this->em),
                 'form_template' => 'SoloistCoreBundle:AdminBlock:configurePageShortcut.html.twig'
             ))
+            ->addBlockType('similar_content', array(
+                'name'          => 'Contenu similaire',
+                'action'        => 'SoloistCoreBundle:Default:similarContent',
+                'settings'      => array('type' => 'page'),
+                'form'          => new SimilarContentType(),
+                'form_template' => 'SoloistCoreBundle:AdminBlock:configureSimilarContent.html.twig'
+            ))
         ;
     }
 }
