@@ -139,15 +139,6 @@ class Page extends Node implements Taggable
     }
 
     /**
-     * Get tag type
-     * @return string
-     */
-    public function getTaggableType()
-    {
-        return 'soloist_tag';
-    }
-
-    /**
      * Get id of the current entity
      * @return integer
      */

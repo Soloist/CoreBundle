@@ -224,4 +224,15 @@ abstract class Node
     public function postLoad()
     {
     }
+
+    /**
+     * Get tag type
+     * This method is a part of the Taggable interface
+     *
+     * @return string
+     */
+    public function getTaggableType()
+    {
+        return 'soloist_node';
+    }
 }
