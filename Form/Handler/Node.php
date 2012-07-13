@@ -75,10 +75,6 @@ class Node
     public function update(Form $form, Request $request)
     {
         $data = $form->getData();
-        $oldTags = null;
-        if ($data instanceof Taggable) {
-            $oldTags = $this->tagManager->splitTagNames($data->tagsAsText);
-        }
 
         $form->bindRequest($request);
         if ($form->isValid()) {
@@ -89,23 +85,8 @@ class Node
 
                 $tags = $this->tagManager->splitTagNames($data->tagsAsText);
 
-                foreach ($tags as $key => $tag) {
-                    if (!in_array($tag, $oldTags)) {
-                        $currentTag = $this->tagManager->loadOrCreateTag($tag);
-                        $this->tagManager->addTag($currentTag, $data);
-
-                    } else {
-                        if ($key = array_search($tag, $oldTags)) {
-                            unset($oldTags[$key]);
-                        }
-
-                    }
-                }
-
-                foreach ($oldTags as $tag) {
-                    $currentTag = $this->tagManager->loadOrCreateTag($tag);
-                    $this->tagManager->removeTag($currentTag, $data);
-                }
+                $tags = $this->tagManager->loadOrCreateTags($tags);
+                $this->tagManager->addTags($tags, $data);
             }
 
             $this->em->flush();
