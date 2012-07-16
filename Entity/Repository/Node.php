@@ -35,6 +35,8 @@ class Node extends NestedTreeRepository
      * Get similar results
      * NEED a taggable node
      * Sql draft available here: https://gist.github.com/3105206/70ab5aaa6654890433d8e5d9671f320a695d3627
+     * Notice that the only node who will work is tha page
+     *
      * @param  Taggable $resource
      * @param  integer  $limit
      * @return array
@@ -56,15 +58,15 @@ class Node extends NestedTreeRepository
         }
 
         $part = <<<SQL
-SELECT DISTINCT * FROM node a
-WHERE id IN (
+SELECT DISTINCT * FROM node n
+WHERE n.id IN (
     SELECT resourceId FROM tagging tg
     INNER JOIN t.name as t ON t.id = tg.tag_id
     WHERE t.slug IN({$tagsList})
         AND resourceType = 'soloist_node'
     GROUP BY resourceId
     HAVING COUNT(t.id) = $count
-)
+) AND n.discr = 'page'
 ORDER BY node.created_at ASC
 SQL;
         $sql = '';
@@ -83,7 +85,6 @@ SQL;
         $rsm = new ResultSetMappingBuilder($this->_em);
         $rsm->addRootEntityFromClassMetadata('SoloistCoreBundle:Node', 'n');
 
-        $replacedValues = array($count, $limit);
         $query = $this->_em->createNativeQuery($sql, $rsm);
 
         return $query->getResult();

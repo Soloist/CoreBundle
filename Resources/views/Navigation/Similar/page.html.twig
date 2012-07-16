@@ -1,0 +1,7 @@
+<div class="soloist-similar-content">
+    <ul>
+        {% for node in nodes %}
+            <li><a href="{{ soloist_path(page) }}">{{ node.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
