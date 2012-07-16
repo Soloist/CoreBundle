@@ -2,8 +2,7 @@
 
 namespace Soloist\Bundle\CoreBundle\Controller;
 
-use Doctrine\Common\Util\Inflector,
-    DoctrineExtensions\Taggable\Taggable;
+use Doctrine\Common\Util\Inflector;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Soloist\Bundle\CoreBundle\Entity\Action,
     Soloist\Bundle\CoreBundle\Entity\Page,
@@ -56,16 +55,4 @@ class DefaultController extends Controller
         );
     }
 
-    /**
-     * @Template()
-     * @return array
-     */
-    public function similarContentAction($node)
-    {
-        if (!$node instanceof Taggable) {
-            throw new InvalidArgumentException('Sorry ! I need tags to search similar content. Therefore your element must implements "DoctrineExtensions\Taggable\Taggable".')
-        }
-        $tagManager = $this->get('fpn_tag.tag_manager');
-        $tagManager->loadOrCreateTags($node);
-    }
 }
