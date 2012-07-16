@@ -6,6 +6,8 @@ use Doctrine\ORM\Query\Expr;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use DoctrineExtensions\Taggable\Taggable;
 
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
 class Node extends NestedTreeRepository
 {
     public function findAllOrderedByLeft()
@@ -39,7 +41,51 @@ class Node extends NestedTreeRepository
      */
     public function getSimilarResults(Taggable $resource, $limit = 5)
     {
-        $qb = $this->createQueryBuilder('n');
-        // will be better with a native query
+        $tagsList = '';
+        $count = $resource->getTags()->count();
+
+        if ($count < 1) {
+            return array();
+        }
+
+        foreach ($resource->getTags() as $tag) {
+            if (!empty($tagsList)) {
+                $tagsList .= ', ';
+            }
+            $tagsList .= '\'' . $tag->getSlug() . '\'';
+        }
+
+        $part = <<<SQL
+SELECT DISTINCT * FROM node a
+WHERE id IN (
+    SELECT resourceId FROM tagging tg
+    INNER JOIN t.name as t ON t.id = tg.tag_id
+    WHERE t.slug IN({$tagsList})
+        AND resourceType = 'soloist_node'
+    GROUP BY resourceId
+    HAVING COUNT(t.id) = $count
+)
+ORDER BY node.created_at ASC
+SQL;
+        $sql = '';
+
+        do {
+            if (!empty($sql)) {
+                $sql .= ' UNION ';
+            }
+            $sql .= str_replace('$count', $count, $sql);
+            $count--;
+        } while ($sql === '' || $count > 0);
+
+
+        $sql .= "\n" . 'LIMIT ' . $limit;
+
+        $rsm = new ResultSetMappingBuilder($this->_em);
+        $rsm->addRootEntityFromClassMetadata('SoloistCoreBundle:Node', 'n');
+
+        $replacedValues = array($count, $limit);
+        $query = $this->_em->createNativeQuery($sql, $rsm);
+
+        return $query->getResult();
     }
 }
