@@ -61,7 +61,7 @@ class NavigationController extends Controller
         }
 
         $tagManager = $this->get('fpn_tag.tag_manager');
-        $tagManager->loadOrCreateTags($node);
+        $tagManager->loadTagging($node);
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('SoloistCoreBundle:Node');
