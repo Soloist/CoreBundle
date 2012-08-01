@@ -16,6 +16,7 @@
         <parameter key="soloist.core.twig.extension.class">Soloist\Bundle\CoreBundle\Twig\Extension</parameter>
         <parameter key="soloist.core.form.type.json_array.class">Soloist\Bundle\CoreBundle\Form\Type\JsonArrayType</parameter>
         <parameter key="soloist.core.router.class">Soloist\Bundle\CoreBundle\Router</parameter>
+        <parameter key="soloist.core.listener.blog.class">Soloist\Bundle\CoreBundle\EventListener\BlogListener</parameter>
     </parameters>
 
     <services>
@@ -46,6 +47,11 @@
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.new"  method="onConfigureNewMenu" />
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.top"  method="onConfigureTopMenu" />
             <tag name="kernel.event_listener" event="fw_dashboard.configure.menu.left" method="onConfigureLeftMenu" />
+        </service>
+
+        <service id="soloist.core.listener.blog" class="%soloist.core.listener.blog.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="soloist_blog.request_categories"  method="onRequestCategories" />
         </service>
 
         <service id="soloist.core.listener.block" class="%soloist.core.listener.block.class%">
