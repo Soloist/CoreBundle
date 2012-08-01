@@ -225,6 +225,11 @@ abstract class Node
     {
     }
 
+    public function getGlobalId()
+    {
+        return 'core-' . $this->getType() . '-' . $this->getId();
+    }
+
     /**
      * Get tag type
      * This method is a part of the Taggable interface
