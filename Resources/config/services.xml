@@ -66,6 +66,11 @@
             <argument type="service" id="router" />
         </service>
 
+        <service id="soloist.core.listener.blog" class="%soloist.core.listener.blog.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="soloist_blog.request_categories"  method="onRequestCategories" />
+        </service>
+
     </services>
 
 </container>

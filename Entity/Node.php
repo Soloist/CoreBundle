@@ -224,4 +224,9 @@ abstract class Node
     public function postLoad()
     {
     }
+
+    public function getGlobalId()
+    {
+        return 'core-' . $this->getType() . '-' . $this->getId();
+    }
 }
