@@ -16,6 +16,7 @@
         <parameter key="soloist.core.twig.extension.class">Soloist\Bundle\CoreBundle\Twig\Extension</parameter>
         <parameter key="soloist.core.form.type.json_array.class">Soloist\Bundle\CoreBundle\Form\Type\JsonArrayType</parameter>
         <parameter key="soloist.core.router.class">Soloist\Bundle\CoreBundle\Router</parameter>
+        <parameter key="soloist.core.listener.blog.class">Soloist\Bundle\CoreBundle\EventListener\BlogListener</parameter>
     </parameters>
 
     <services>
