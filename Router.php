@@ -44,4 +44,15 @@ class Router
     {
         return $this->router->generate('soloist_show', array('slug' => $page->getSlug()), $absolute);
     }
+
+    protected function generateForAction(Entity\Action $action, $absolute = false)
+    {
+        $params = $action->getParams();
+        $route = $params['route'];
+        unset($params['route']);
+
+        return $this->router->generate($route, $params, $absolute);
+    }
+
+
 }
