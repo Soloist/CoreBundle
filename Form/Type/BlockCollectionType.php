@@ -4,7 +4,8 @@ namespace Soloist\Bundle\CoreBundle\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\EventListener\MergeCollectionListener,
     Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface;
+    Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Soloist\Bundle\CoreBundle\EventListener\ResizeFormListener;
 
@@ -20,13 +21,15 @@ class BlockCollectionType extends AbstractType
         $builder->addEventSubscriber(new MergeCollectionListener(true,true));
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults(array(
             'block_factory'  => null,
             'type'           => 'text',
             'options'        => array(),
-        );
+        ));
     }
 
     /**
