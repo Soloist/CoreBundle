@@ -11,18 +11,12 @@
     processIsolation            = "false"
     stopOnFailure               = "false"
     syntaxCheck                 = "false"
-    bootstrap                   = "bootstrap.php.cache" >
+    bootstrap                   = "Tests/bootstrap.php" >
 
     <testsuites>
         <testsuite name="Soloist Core Test Suite">
             <directory>Tests</directory>
         </testsuite>
     </testsuites>
-
-    <!--
-    <php>
-        <server name="KERNEL_DIR" value="/path/to/your/app/" />
-    </php>
-    -->
 
 </phpunit>

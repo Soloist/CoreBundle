@@ -1,0 +1,36 @@
+{
+    "name": "soloist/core-bundle",
+
+    "autoload": {
+        "psr-0": { "Soloist\\Bundle\\CoreBundle": "" }
+    },
+
+    "require": {
+        "symfony/framework-bundle": "2.1.*",
+        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "*",
+        "symfony/twig-bundle": "*",
+        "symfony/form": "*",
+        "frequence-web/dashboard-bundle": "*",
+        "stof/doctrine-extensions-bundle": "*",
+        "sensio/framework-extra-bundle": "*"
+    },
+
+    "require-dev": {
+        "symfony/browser-kit": "*",
+        "symfony/css-selector": "*",
+        "symfony/yaml": "*",
+        "symfony/finder": "*",
+        "symfony/class-loader": "*"
+    },
+
+    "repositories": {
+        "frequence-web": {
+            "type": "composer",
+            "url":  "composer.frequence-web.net"
+        }
+    },
+
+    "minimum-stability": "dev",
+    "target-dir": "Soloist/Bundle/CoreBundle"
+}
