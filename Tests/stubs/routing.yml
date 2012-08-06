@@ -1,0 +1,8 @@
+SoloistCoreBundle:
+    resource: "@SoloistCoreBundle/Resources/config/routing.xml"
+    prefix:   /
+
+
+SoloistDashboardBundle:
+    resource: "@FrequenceWebDashboardBundle/Resources/config/routing.xml"
+    prefix:   /admin

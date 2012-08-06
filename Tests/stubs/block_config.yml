@@ -1,0 +1,8 @@
+text:
+    class:         Soloist\Bundle\CoreBundle\Entity\TextBlock
+    form_type:     Soloist\Bundle\CoreBundle\Form\Type\TextBlockType
+    form_template: 'SoloistCoreBundle:Form:block_text.html.twig'
+image:
+    class:         Soloist\Bundle\CoreBundle\Entity\ImageBlock
+    form_type:     Soloist\Bundle\CoreBundle\Form\Type\ImageBlockType
+    form_template: 'SoloistCoreBundle:Form:block_image.html.twig'
