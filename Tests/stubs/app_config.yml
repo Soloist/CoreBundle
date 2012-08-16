@@ -44,3 +44,6 @@ assetic:
     filters:
         less: ~
         coffee: ~
+
+imports:
+    - { resource: soloist.yml }

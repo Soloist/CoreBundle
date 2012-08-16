@@ -1,0 +1,51 @@
+soloist_core:
+    node_types:
+        category:
+            class:     Soloist\Bundle\CoreBundle\Entity\Category
+            form_type: Soloist\Bundle\CoreBundle\Form\Type\CategoryType
+        shortcut:
+            class:     Soloist\Bundle\CoreBundle\Entity\Shortcut
+            form_type: Soloist\Bundle\CoreBundle\Form\Type\ShortcutType
+        link:
+            class:     Soloist\Bundle\CoreBundle\Entity\Link
+            form_type: Soloist\Bundle\CoreBundle\Form\Type\LinkType
+        page:
+            class:     Soloist\Bundle\CoreBundle\Entity\Page
+            form_type: soloist.page.form.type
+        action:
+            class:     Soloist\Bundle\CoreBundle\Entity\Action
+            form_type: Soloist\Bundle\CoreBundle\Form\Type\ActionType
+
+    block_types:
+        text:
+            class:         Soloist\Bundle\CoreBundle\Entity\TextBlock
+            form_type:     Soloist\Bundle\CoreBundle\Form\Type\TextBlockType
+            form_template: ':Form:block_text.html.twig'
+        image:
+            class:         Soloist\Bundle\CoreBundle\Entity\ImageBlock
+            form_type:     Soloist\Bundle\CoreBundle\Form\Type\ImageBlockType
+            form_template: ':Form:block_image.html.twig'
+
+    page_types:
+        chapo_et_paragraphes_avec_image_alternes:
+            template:       '::lead_alternate_text_image.html.twig'
+            admin_template: '::admin_lead_alternate_text_image.html.twig'
+            fields:
+                title_image: image
+                lead:        text
+                p_1:         text
+                img_1:       image
+                p_2:         text
+                img_2:       image
+        chapo_et_paragraphes_avec_image_en_bas:
+            template:       '::lead_text_image.html.twig'
+            admin_template: '::admin_lead_text_image.html.twig'
+            fields:
+                title_image: image
+                lead:        text
+                p_1:         text
+                img_1:       image
+                p_2:         text
+                img_2:       image
+                img_3:       image
+

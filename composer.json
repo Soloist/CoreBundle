@@ -6,22 +6,15 @@
     },
 
     "require": {
-        "symfony/framework-bundle": "2.1.*",
+        "symfony/symfony": "*",
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "*",
-        "symfony/twig-bundle": "*",
-        "symfony/form": "*",
         "frequence-web/dashboard-bundle": "*",
         "stof/doctrine-extensions-bundle": "*",
         "sensio/framework-extra-bundle": "*"
     },
 
     "require-dev": {
-        "symfony/browser-kit": "*",
-        "symfony/css-selector": "*",
-        "symfony/yaml": "*",
-        "symfony/finder": "*",
-        "symfony/class-loader": "*"
     },
 
     "repositories": {

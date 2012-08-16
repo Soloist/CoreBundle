@@ -1,0 +1,12 @@
+<div class="thumbnail">
+    <div class="thumbnail-subject">
+        {% if block.path %}
+            <img src="{{ block.path }}" />
+        {% endif %}
+    </div>
+    <div class="caption">
+        {{ form_widget(form.title) }}
+        {{ form_widget(form.path) }}
+        {{ form_widget(form.name) }}
+    </div>
+</div>

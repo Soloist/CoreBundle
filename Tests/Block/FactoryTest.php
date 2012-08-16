@@ -83,8 +83,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBlockTemplate()
     {
-        $this->assertSame('SoloistCoreBundle:Form:block_text.html.twig', $this->factory->getBlockTemplate('text'));
-        $this->assertSame('SoloistCoreBundle:Form:block_image.html.twig', $this->factory->getBlockTemplate('image'));
+        $this->assertSame(':Form:block_text.html.twig', $this->factory->getBlockTemplate('text'));
+        $this->assertSame(':Form:block_image.html.twig', $this->factory->getBlockTemplate('image'));
     }
 
     /**
@@ -96,19 +96,24 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Soloist\Bundle\CoreBundle\Form\Type\ImageBlockType', $this->factory->getBlockForm('image'));
     }
 
+    private static function getConfig($type)
+    {
+        static $config = null;
+
+        if (null === $config) {
+            $config = Yaml::parse(file_get_contents(__DIR__.'/../stubs/soloist.yml'));
+        }
+
+        return $config['soloist_core'][$type];
+    }
+
     /**
      * @static
      * @return array
      */
     private static function getPageConfig()
     {
-        static $config = null;
-
-        if (null === $config) {
-            $config = Yaml::parse(file_get_contents(__DIR__.'/../stubs/page_config.yml'));
-        }
-
-        return $config;
+        return self::getConfig('page_types');
     }
 
     /**
@@ -117,12 +122,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     private static function getBlockConfig()
     {
-        static $config = null;
-
-        if (null === $config) {
-            $config = Yaml::parse(file_get_contents(__DIR__.'/../stubs/block_config.yml'));
-        }
-
-        return $config;
+        return self::getConfig('block_types');
     }
 }

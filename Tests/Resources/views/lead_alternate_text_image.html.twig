@@ -1,0 +1,23 @@
+<div>
+    <div>
+        {{ page.getBlock('p_1').value | raw }}
+    </div>
+    <div>
+        {% if page.getBlock('img_1').path %}
+            <img src="{{ page.getBlock('img_1').path }}"
+                 alt="{{ page.getBlock('img_1').title }}" />
+        {% endif %}
+    </div>
+</div>
+
+<div>
+    <div>
+        {% if page.getBlock('img_2').path %}
+            <img src="{{ page.getBlock('img_2').path }}"
+                 alt="{{ page.getBlock('img_2').title }}" />
+        {% endif %}
+    </div>
+    <div>
+        {{ page.getBlock('p_2').value | raw }}
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="row-fluid">
+    <div class="span12">
+        <label class="label label-info" for="soloist_page_blocks_title_image_value">Image titre</label>
+        {% include ':Form:block_image.html.twig'
+            with { form: form.blocks["title_image"], block: node.getBlock('title_image') } %}
+    </div>
+</div>
+
+<div class="row-fluid lead-block">
+    <div class="span12">
+        <label class="label label-info" for="soloist_page_blocks_lead_value">Chapô</label>
+        {% include ':Form:block_text.html.twig' with { form: form.blocks["lead"] } %}
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span8">
+        <label class="label label-info" for="soloist_page_blocks_p_1_value">Paragraphe 1</label>
+        {% include ':Form:block_text.html.twig' with { form: form.blocks['p_1'] } %}
+    </div>
+    <div class="span4">
+        <label class="label label-info" for="soloist_page_blocks_img_1_value">Image 1</label>
+        {% include ':Form:block_image.html.twig'
+            with { form: form.blocks['img_1'], block: node.getBlock('img_1') } %}
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span4">
+        <label class="label label-info" for="soloist_page_blocks_img_2_value">Image 2</label>
+        {% include ':Form:block_image.html.twig'
+            with { form: form.blocks['img_2'], block: node.getBlock('img_2') } %}
+    </div>
+    <div class="span8">
+        <label class="label label-info" for="soloist_page_blocks_p_2_value">Paragraphe 2</label>
+        {% include ':Form:block_text.html.twig' with { form: form.blocks['p_2'] } %}
+    </div>
+</div>
+
