@@ -1,5 +1,5 @@
 # language: fr
-@mink:sahi
+@javascript
 Fonctionnalité: Gestion des noeuds
     Pour construire mon menu
     En tant qu'administrateur du site
@@ -16,7 +16,8 @@ Fonctionnalité: Gestion des noeuds
     Scénario: Créer une Catégorie
         Soit je suis sur une page du back-office
           Et je suis "Menu"
-          Et je suis "soloist_category_new"
+          Et je suis "Nouveau"
+          Et je suis "Catégorie"
           Et l'élément "h1" devrait contenir "Ajouter un élément"
           Et je devrais voir "Nouveau noeud"
        Quand je remplis "Title" avec "Behat-test"
@@ -39,6 +40,7 @@ Fonctionnalité: Gestion des noeuds
         Soit je suis sur une page du back-office
           Et je suis "Menu"
        Quand je clique sur le bouton "Supprimer" de la ligne contenant "Foo-Bar"
+          Et j'accepte la boite de dialogue
        Alors je devrais voir "Gestion du menu"
           Et je ne devrais pas voir "Behat-test"
           Et je ne devrais pas voir "Foo-Bar"

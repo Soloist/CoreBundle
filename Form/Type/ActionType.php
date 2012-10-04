@@ -11,8 +11,8 @@ class ActionType extends NodeType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('label')
-            ->add('action')
+            ->add('label', null, array('required' => false))
+            ->add('action', null, array('required' => false))
             ->add('params', 'json_array')
         ;
     }

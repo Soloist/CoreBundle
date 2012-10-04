@@ -10,7 +10,7 @@ abstract class BlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'hidden');
+        $builder->add('name', 'hidden', array('required' => false));
     }
 
     public function getName()
@@ -20,8 +20,6 @@ abstract class BlockType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setDefaults(array('data_class' => $this->getDataClass()));
     }
 

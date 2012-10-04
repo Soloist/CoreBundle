@@ -34,7 +34,7 @@ class Router
     {
         $method = Inflector::camelize('generate-for-'.$node->getType());
         if (!method_exists($this, $method)) {
-            throw new HttpException(500, 'No route for object of type '.get_class($node));
+            return null;
         }
 
         return $this->$method($node, $absolute);
