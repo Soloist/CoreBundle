@@ -17,6 +17,8 @@
         <parameter key="soloist.core.form.type.json_array.class">Soloist\Bundle\CoreBundle\Form\Type\JsonArrayType</parameter>
         <parameter key="soloist.core.router.class">Soloist\Bundle\CoreBundle\Router</parameter>
         <parameter key="soloist.core.listener.blog.class">Soloist\Bundle\CoreBundle\EventListener\BlogListener</parameter>
+        <parameter key="soloist.core.listener.cache.class">Soloist\Bundle\CoreBundle\Cache\NodeCacheListener</parameter>
+        <parameter key="soloist.core.cache.tree.class">Soloist\Bundle\CoreBundle\Cache\ApcCache</parameter>
     </parameters>
 
     <services>
@@ -70,6 +72,17 @@
         <service id="soloist.core.listener.blog" class="%soloist.core.listener.blog.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <tag name="kernel.event_listener" event="soloist_blog.request_categories"  method="onRequestCategories" />
+        </service>
+
+        <service id="soloist.core.cache.tree" class="%soloist.core.cache.tree.class%">
+            <argument>%soloist.cache.namespace%</argument>
+            <argument>tree</argument>
+            <argument>2592000</argument>
+        </service>
+
+        <service id="soloist.core.listener.cache" class="%soloist.core.listener.cache.class%" public="false">
+            <argument type="service" id="soloist.core.cache.tree" />
+            <tag name="doctrine.event_subscriber" />
         </service>
 
     </services>

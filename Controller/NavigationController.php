@@ -9,12 +9,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class NavigationController extends Controller
 {
     /**
-     * @Template()
-     * @return array
+     * @return Response
      */
     public function showAction()
     {
-        return array('nodes' => $this->getDoctrine()->getRepository('SoloistCoreBundle:Node')->getRootNodes());
+        $cache = $this->get('soloist.core.cache.tree');
+        if ($cache->has()) {
+            return $cache->get();
+        }
+
+        $response = $this->render(
+            'SoloistCoreBundle:Navigation:show.html.twig',
+            array(
+                'nodes' => $this->getDoctrine()->getRepository('SoloistCoreBundle:Node')->getRootNodes()
+            )
+        );
+        $cache->set($response);
+
+        return $response;
     }
 
     /**

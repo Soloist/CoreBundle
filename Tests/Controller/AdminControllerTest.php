@@ -15,7 +15,7 @@ class AdminControllerTest extends WebTestCase
         $newPageLink = $crawler->filter('#soloist_page_new')->link();
         $client->click($newPageLink);
 
-        // Fill form
+
 
     }
 }
