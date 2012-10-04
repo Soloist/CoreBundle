@@ -11,7 +11,7 @@ class TextBlockType extends BlockType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('value', 'textarea')
+            ->add('value', 'textarea', array('required' => false))
         ;
     }
 

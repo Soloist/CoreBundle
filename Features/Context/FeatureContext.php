@@ -2,8 +2,7 @@
 
 namespace Soloist\Bundle\CoreBundle\Features\Context;
 
-use Behat\BehatBundle\Context\BehatContext,
-    Behat\BehatBundle\Context\MinkContext;
+use Behat\MinkExtension\Context\MinkContext;
 use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Mink\Exception\ExpectationException,
@@ -48,6 +47,14 @@ class FeatureContext extends MinkContext //MinkContext if you want to test web
             sprintf('Unable to find "%s" in row containing "%s"', $buttonLabel, $rowLabel),
             $this->getSession()
         );
+    }
+
+    /**
+     * @Given /^j\'accepte la boite de dialogue$/
+     */
+    public function acceptAlert()
+    {
+        $this->getSession()->getDriver()->wdSession->accept_alert();
     }
 
     private function xpathLiteral($locator)

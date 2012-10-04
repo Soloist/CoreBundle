@@ -2,7 +2,8 @@
     <ul>
         {% for node in nodes %}
             <li{{ node.id == current.id ? ' class="current"' : '' }}>
-                <a href="{{ soloist_path(node) }}">{{ node.title | nl2br }}</a>
+                {% set path = soloist_path(node) %}
+                <a href="{{ path ? path : '#' }}">{{ node.title | nl2br }}</a>
                 {% if node.__children is defined %}
                     {{ _self.display_tree(node.__children, current) }}
                 {% endif %}
@@ -13,7 +14,8 @@
 
 <nav>
     <h3{{ root.id == current.id ? ' class="current"' : '' }}>
-        <a href="{{ soloist_path(root) }}">{{ root.title | nl2br }}</a>
+        {% set path = soloist_path(root) %}
+        <a href="{{ path ? path : '#' }}">{{ root.title | nl2br }}</a>
     </h3>
     {{ _self.display_tree(nodes, current) }}
 </nav>
