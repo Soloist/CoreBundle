@@ -6,37 +6,7 @@
     {%- endfor %}
 {%- endmacro %}
 
-{% block body %}
-    <h1>Gestion du menu</h1>
-
-    <table class="table table-bordered table-striped node-list table-condensed">
-        <thead>
-            <tr>
-                <th class="node-id">N°</th>
-                <th class="node-title">Nom</th>
-                <th class="node-actions">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for node in nodes %}
-                <tr>
-                    <td class="node-id">#{{ node.id }}</td>
-                    <td class="node-title">{{ _self.repeat('&middot; &middot; ', node.level) }}{{ node.title }}</td>
-                    <td class="node-actions">
-                        <a class="btn btn-mini"
-                           href="{{ path('soloist_admin_node_edit', node.routeParams) }}">
-                            <i class="icon-cog"></i> Editer
-                        </a>
-                        <a class="btn btn-mini btn-danger ask-delete"
-                           href="{{ path('soloist_admin_node_delete', node.routeParams) }}">
-                            <i class="icon-trash icon-white"></i> Supprimer
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+{% macro actions() %}
     <div class="form-actions">
         <div class="btn-group">
             <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">
@@ -72,6 +42,42 @@
             </ul>
         </div>
     </div>
+{%  endmacro %}
+
+{% block body %}
+    <h1>Gestion du menu</h1>
+
+    {{  _self.actions() }}
+
+    <table class="table table-bordered table-striped node-list table-condensed">
+        <thead>
+            <tr>
+                <th class="node-id">N°</th>
+                <th class="node-title">Nom</th>
+                <th class="node-actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for node in nodes %}
+                <tr>
+                    <td class="node-id">#{{ node.id }}</td>
+                    <td class="node-title">{{ _self.repeat('&middot; &middot; ', node.level) }}{{ node.title }}</td>
+                    <td class="node-actions">
+                        <a class="btn btn-mini"
+                           href="{{ path('soloist_admin_node_edit', node.routeParams) }}">
+                            <i class="icon-cog"></i> Editer
+                        </a>
+                        <a class="btn btn-mini btn-danger ask-delete"
+                           href="{{ path('soloist_admin_node_delete', node.routeParams) }}">
+                            <i class="icon-trash icon-white"></i> Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ _self.actions() }}
 {% endblock %}
 
 {% block aside %}

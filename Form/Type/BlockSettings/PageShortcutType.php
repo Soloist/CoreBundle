@@ -2,13 +2,12 @@
 
 namespace Soloist\Bundle\CoreBundle\Form\Type\BlockSettings;
 
-use Soloist\Bundle\CoreBundle\Entity\Page;
-
-use Symfony\Component\Form\DataTransformerInterface,
-    Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface;
-
 use Doctrine\ORM\EntityManager;
+use Soloist\Bundle\CoreBundle\Entity\Page;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PageShortcutType extends AbstractType implements DataTransformerInterface
 {
@@ -17,11 +16,17 @@ class PageShortcutType extends AbstractType implements DataTransformerInterface
      */
     protected $em;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -35,9 +40,7 @@ class PageShortcutType extends AbstractType implements DataTransformerInterface
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @{inheritDoc}
      */
     public function getName()
     {
@@ -68,12 +71,15 @@ class PageShortcutType extends AbstractType implements DataTransformerInterface
         return $value;
     }
 
-    public function getDefaultOptions()
+    /**
+     * @{inheritDoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-            'em' => null
+        $resolver->setDefaults(
+            array(
+                'em' => null,
+            )
         );
     }
-
-
 }
