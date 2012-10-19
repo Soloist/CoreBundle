@@ -34,7 +34,8 @@ class Factory extends ContainerAware
 
     public function getNode($type, $pageType = null)
     {
-        $node = new $this->nodes[$type];
+        $clazz = $this->nodes[$type];
+        $node = new $clazz;
 
         if ('page' == $type) {
             $pageType = null === $pageType ? $this->blockFactory->getPageFirst() : $pageType;
@@ -52,7 +53,8 @@ class Factory extends ContainerAware
     {
         $formType = null;
         if (class_exists($this->forms[$type])) {
-            $formType = new $this->forms[$type]($this->container->get('doctrine.orm.entity_manager'));
+            $clazz = $this->forms[$type];
+            $formType = new $clazz($this->container->get('doctrine.orm.entity_manager'));
         } else {
             $formType = $this->container->get($this->forms[$type]);
         }

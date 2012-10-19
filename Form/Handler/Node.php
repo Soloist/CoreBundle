@@ -40,7 +40,7 @@ class Node
 
     public function create(Form $form, Request $request)
     {
-        $form->bindRequest($request);
+        $form->bind($request);
         if ($form->isValid()) {
             $this->em->persist($form->getData());
             $this->em->flush();
@@ -53,7 +53,7 @@ class Node
 
     public function update(Form $form, Request $request)
     {
-        $form->bindRequest($request);
+        $form->bind($request);
         if ($form->isValid()) {
             $this->em->flush();
 

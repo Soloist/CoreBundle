@@ -93,7 +93,7 @@ class AdminController extends Controller
 
     public function deleteAction(Node $node)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->remove($node);
         $em->flush();
         $this->get('session')->setFlash('success', 'Le noeud a été supprimé avec succès');
@@ -105,7 +105,7 @@ class AdminController extends Controller
     {
         $data = $request->request->get('soloist_page');
         $form = $this->getFormHandler()->getCreateForm('page', $data['pageType']);
-        $form->bindRequest($request);
+        $form->bind($request);
 
         return $this->render(
             $this->get('soloist.block.factory')->getPageFormTemplate($data['pageType']),
