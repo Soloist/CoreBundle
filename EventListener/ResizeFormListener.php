@@ -2,12 +2,14 @@
 
 namespace Soloist\Bundle\CoreBundle\EventListener;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface,
-    Symfony\Component\Form\FormFactoryInterface,
-    Symfony\Component\Form\Event\DataEvent,
-    Symfony\Component\Form\FormEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 use Soloist\Bundle\CoreBundle\Block\Factory;
+use Soloist\Bundle\CoreBundle\Entity\Block;
 
 
 /**
@@ -43,10 +45,11 @@ class ResizeFormListener implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
+            FormEvents::PRE_BIND         => 'preBind'
         );
     }
 
-    public function preSetData(DataEvent $event)
+    public function preSetData(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -62,12 +65,54 @@ class ResizeFormListener implements EventSubscriberInterface
 
         // Then add all rows again in the correct order
         foreach ($data as $value) {
-            $form->add($this->factory->createNamed(
-                $value->getName(),
-                $this->blockFactory->getBlockForm($value->getType()),
-                $value,
-                array_replace(array('property_path' => '['.$value->getName().']'), $this->options)
-            ));
+            $this->addBlockRow($form, $value);
         }
+    }
+
+    /**
+     * Hack for re-setting blocks names
+     *
+     * @param FormEvent $event
+     */
+    public function preBind(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+        $blocks = $this->blockFactory->getPageType($form->getParent()->get('pageType')->getData());
+
+        // Add needed blocks
+        foreach ($data as $key => $value) {
+            if (!$form->has($key) && isset($blocks[$key])) {
+                $block = $blocks[$key];
+                $block->setNode($form->getParent()->getData());
+                $this->addBlockRow($form, $block);
+            }
+            if (!$value['name']) {
+                $data[$key]['name'] = $key;
+            }
+        }
+
+        // removes old ones
+        foreach ($form as $key => $field) {
+            if (!isset($blocks[$key])) {
+                $form->remove($key);
+            }
+        }
+
+        $event->setData($data);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param Block $block
+     */
+    private function addBlockRow(FormInterface $form, Block $block)
+    {
+        $form->add($this->factory->createNamed(
+            $block->getName(),
+            $this->blockFactory->getBlockForm($block->getType()),
+            $block,
+            array_replace(array('property_path' => '['.$block->getName().']'), $this->options)
+        ));
     }
 }

@@ -39,11 +39,11 @@ class AdminController extends Controller
     /**
      * @Template
      */
-    public function editAction(Node $node)
+    public function editAction(Node $node, Request $request)
     {
         $this->addBaseBreadcrumb()->add('Editer le noeud : '.$node->getTitle());
 
-        return array('form' => $this->getFormHandler()->getUpdateForm($node)->createView(), 'node' => $node);
+        return array('form' => $this->getFormHandler()->getUpdateForm($node, $request)->createView(), 'node' => $node);
     }
 
     /**
@@ -80,7 +80,7 @@ class AdminController extends Controller
         $this->addBaseBreadcrumb()->add('Editer le noeud : '.$node->getTitle());
 
         $handler = $this->getFormHandler();
-        $form    = $handler->getUpdateForm($node);
+        $form    = $handler->getUpdateForm($node, $request);
 
         if ($handler->update($form, $request)) {
             $this->get('session')->setFlash('success', 'Le noeud a été modifié avec succès');

@@ -112,7 +112,8 @@ class Factory
     public function createBlock($type)
     {
         if (isset($this->blockConfig[$type])) {
-            return new $this->blockConfig[$type]['class'];
+            $class = $this->blockConfig[$type];
+            return new $class['class'];
         }
 
         return null;
@@ -130,7 +131,8 @@ class Factory
     public function getBlockForm($type)
     {
         if (isset($this->blockConfig[$type])) {
-            return new $this->blockConfig[$type]['form_type'];
+            $class = $this->blockConfig[$type];
+            return new $class['form_type'];
         }
 
         return null;
