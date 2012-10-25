@@ -1,18 +1,17 @@
 {{ form_errors(form) }}
 
-{%- if form.parent %}
-    {{ form_row(form.parent) }}
-{%- endif %}
-
 {{ form_row(form.title) }}
+
+{%- if form.placementMethod %}
+    {{ form_row(form.placementMethod) }}
+    {{ form_row(form.refererNode) }}
+{%- endif %}
 
 {%- if form.pageType is defined %}
     <div id="soloist-node-pagetype" data-uri="{{ path('soloist_admin_block_get') }}">
         {{ form_row(form.pageType) }}
     </div>
 {%- endif %}
-
-{{ form_row(form.soft_root) }}
 
 {%- if form.pageType is defined %}
     <fieldset id="soloist-node-blocks">

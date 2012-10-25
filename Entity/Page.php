@@ -29,6 +29,8 @@ class Page extends Node
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->blocks = new ArrayCollection;
     }
 

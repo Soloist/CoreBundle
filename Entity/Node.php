@@ -13,6 +13,16 @@ use Doctrine\Common\Collections\ArrayCollection,
 abstract class Node
 {
     /**
+     * @var array<string>
+     */
+    public static $placementMethods = array(
+        'NextSibling' => 'Avant',
+        'PrevSibling' => 'Après',
+        'FirstChild'  => 'Premier enfant de',
+        'LastChild'   => 'Dernier enfant de',
+    );
+
+    /**
      * The node ID
      */
     protected $id;
@@ -33,6 +43,7 @@ abstract class Node
 
     /**
      * Node level (0 => root, 1 => root child, etc..)
+     *
      * @var int
      */
     protected $level;
@@ -45,7 +56,7 @@ abstract class Node
     /**
      * The parent
      *
-     * @var \Soloist\Bundle\CoreBundle\Node
+     * @var \Soloist\Bundle\CoreBundle\Entity\Node
      */
     protected $parent;
 
@@ -71,7 +82,7 @@ abstract class Node
     protected $title;
 
     /**
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
@@ -80,13 +91,24 @@ abstract class Node
      */
     protected $updatedAt;
 
+    /**
+     * @var Node
+     */
+    protected $refererNode;
+
+    /**
+     * @var string
+     */
+    protected $placementMethod;
+
     public function __construct()
     {
-        $this->children = new ArrayCollection;
+        $this->children   = new ArrayCollection;
+        $this->isSoftRoot = false;
     }
 
     /**
-     * @param \Soloist\Bundle\CoreBundle\Entity\Doctrine\Common\Collections\Collection $children
+     * @param Node $node
      */
     public function addChild(Node $node)
     {
@@ -94,7 +116,7 @@ abstract class Node
     }
 
     /**
-     * @return \Soloist\Bundle\CoreBundle\Entity\Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getChildren()
     {
@@ -149,7 +171,7 @@ abstract class Node
     }
 
     /**
-     * @return \Soloist\Bundle\CoreBundle\Node
+     * @return Node
      */
     public function getParent()
     {
@@ -206,7 +228,7 @@ abstract class Node
     abstract public function getType();
 
     /**
-     * @return \Soloist\Bundle\CoreBundle\Entity\DateTime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -228,5 +250,37 @@ abstract class Node
     public function getGlobalId()
     {
         return 'core-' . $this->getType() . '-' . $this->getId();
+    }
+
+    /**
+     * @param string $placementMethod
+     */
+    public function setPlacementMethod($placementMethod)
+    {
+        $this->placementMethod = $placementMethod;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlacementMethod()
+    {
+        return $this->placementMethod;
+    }
+
+    /**
+     * @param \Soloist\Bundle\CoreBundle\Entity\Node $refererNode
+     */
+    public function setRefererNode($refererNode)
+    {
+        $this->refererNode = $refererNode;
+    }
+
+    /**
+     * @return \Soloist\Bundle\CoreBundle\Entity\Node
+     */
+    public function getRefererNode()
+    {
+        return $this->refererNode;
     }
 }

@@ -3,11 +3,10 @@
 namespace Soloist\Bundle\CoreBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
-
-use Symfony\Component\Form\AbstractType,
-    Symfony\Component\Form\FormBuilderInterface;
-
+use Doctrine\ORM\EntityRepository;
 use Soloist\Bundle\CoreBundle\Entity\Node;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * The NodeType Class do some things...
@@ -40,12 +39,23 @@ abstract class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($this->needDisplayParent($this->node)) {
-            $builder->add('parent');
+            $builder
+                ->add('placementMethod', 'choice', array('choices' => Node::$placementMethods, 'empty_value' => ''))
+                ->add(
+                    'refererNode',
+                    'entity',
+                    array(
+                        'class'       => 'SoloistCoreBundle:Node',
+                        'empty_value' => '',
+                        'query_builder' => function(EntityRepository $repo) {
+                            return $repo->createQueryBuilder('n')->orderBy('n.lft');
+                        }
+                    )
+                );
         }
 
         $builder
             ->add('title')
-            ->add('soft_root', 'checkbox', array('required' => false))
         ;
     }
 
