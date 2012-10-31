@@ -80,8 +80,9 @@
             <argument>2592000</argument>
         </service>
 
-        <service id="soloist.core.listener.cache" class="%soloist.core.listener.cache.class%" public="false">
+        <service id="soloist.core.listener.cache" class="%soloist.core.listener.cache.class%">
             <argument type="service" id="soloist.core.cache.tree" />
+            <tag name="kernel.event_listener" event="soloist.core.request_cache_clear" method="onRequestCacheClear" />
             <tag name="doctrine.event_subscriber" />
         </service>
 

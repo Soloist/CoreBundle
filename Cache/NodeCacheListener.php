@@ -48,6 +48,11 @@ class NodeCacheListener implements EventSubscriber
         }
     }
 
+    public function onRequestCacheClear()
+    {
+        $this->cache->remove();
+    }
+
     /**
      * @{inheritDoc}
      */
