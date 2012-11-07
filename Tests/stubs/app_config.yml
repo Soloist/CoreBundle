@@ -45,5 +45,8 @@ assetic:
         less: ~
         coffee: ~
 
+parameters:
+    soloist.cache.namespace: soloist_core
+
 imports:
     - { resource: soloist.yml }
