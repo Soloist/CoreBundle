@@ -31,6 +31,11 @@ class Node
      */
     protected $nodeFactory;
 
+    /**
+     * @param NodeFactory   $nodeFactory
+     * @param EntityManager $em
+     * @param FormFactory   $factory
+     */
     public function __construct(NodeFactory $nodeFactory, EntityManager $em, FormFactory $factory)
     {
         $this->em          = $em;
@@ -38,11 +43,17 @@ class Node
         $this->nodeFactory = $nodeFactory;
     }
 
+    /**
+     * @param Form    $form
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function create(Form $form, Request $request)
     {
         $form->bind($request);
         if ($form->isValid()) {
-            $this->em->persist($form->getData());
+            $this->processNodePlacement($form);
             $this->em->flush();
 
             return true;
@@ -51,10 +62,17 @@ class Node
         return false;
     }
 
+    /**
+     * @param Form    $form
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function update(Form $form, Request $request)
     {
         $form->bind($request);
         if ($form->isValid()) {
+            $this->processNodePlacement($form);
             $this->em->flush();
 
             return true;
@@ -63,6 +81,12 @@ class Node
         return false;
     }
 
+    /**
+     * @param string $type
+     * @param string $pageType
+     *
+     * @return Form
+     */
     public function getCreateForm($type, $pageType = null)
     {
         $node = $this->nodeFactory->getNode($type, $pageType);
@@ -71,10 +95,25 @@ class Node
         return $this->factory->create($form, $node);
     }
 
+    /**
+     * @param NodeEntity $node
+     *
+     * @return Form
+     */
     public function getUpdateForm(NodeEntity $node)
     {
         $form = $this->nodeFactory->getFormType($node->getType(), $node);
 
         return $this->factory->create($form, $node);
+    }
+
+    /**
+     * @param Form $form
+     */
+    protected function processNodePlacement(Form $form)
+    {
+        $node = $form->getData();
+        $method = sprintf('persistAs%sOf', $node->getPlacementMethod());
+        $this->em->getRepository('SoloistCoreBundle:Node')->$method($node, $node->getRefererNode());
     }
 }

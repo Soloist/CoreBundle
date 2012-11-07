@@ -87,7 +87,6 @@
         </service>
 
         <service id="soloist.core.listener.node_placement" class="%soloist.core.listener.node_placement.class%" public="false">
-            <argument type="service" id="stof_doctrine_extensions.listener.tree" />
             <tag name="doctrine.event_subscriber" />
         </service>
 

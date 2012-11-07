@@ -16,8 +16,8 @@ abstract class Node
      * @var array<string>
      */
     public static $placementMethods = array(
-        'NextSibling' => 'Avant',
-        'PrevSibling' => 'Après',
+        'PrevSibling' => 'Avant',
+        'NextSibling' => 'Après',
         'FirstChild'  => 'Premier enfant de',
         'LastChild'   => 'Dernier enfant de',
     );
