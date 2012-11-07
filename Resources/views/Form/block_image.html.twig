@@ -1,13 +1,18 @@
 <div class="thumbnail">
     <div class="thumbnail-subject">
         {% if block.path %}
-            <img src="{{ block.path | apply_filter('soloist_admin_media') }}" />
+            <img src="{{ block.path | apply_filter('soloist_admin_media') }}" data-beahvior="image-display" />
         {% endif %}
     </div>
     <div class="caption">
         {{ form_widget(form.title) }}
         {{ form_widget(form.path) }}
         {{ form_widget(form.name) }}
-        <a href="{{ path('soloist_admin_media_index') }}?nolayout" class="btn soloist-media-add">Choisir une image</a>
+        <a href="{{ path('soloist_admin_media_index') }}?nolayout" class="btn soloist-media-add">
+            <i class="icon icon-trash"></i> Choisir une image
+        </a>
+        <a href="#" class="btn btn-danger" data-behavior="remove-image">
+            <i class="icon icon-remove icon-white"></i> Supprimer l'image
+        </a>
     </div>
 </div>
