@@ -13,7 +13,8 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $node = $this->getDoctrine()->getEntityManager()->getRepository('SoloistCoreBundle:Node')->findRoot();
+        $node = $this->getDoctrine()->getManager()->getRepository('SoloistCoreBundle:Node')->findRoot();
+        $this->setCurrentNode($node);
 
         $action = Inflector::camelize('show_'.$node->getType().'_action');
         if (method_exists($this, $action)) {
@@ -24,17 +25,22 @@ class DefaultController extends Controller
     public function showAction(Page $page)
     {
         $template = $this->get('soloist.block.factory')->getPageTemplate($page->getPageType());
+        $this->setCurrentNode($page);
 
         return $this->render($template, array('page' => $page));
     }
 
     public function showPageAction(Page $page)
     {
+        $this->setCurrentNode($page);
+
         return $this->showAction($page);
     }
 
     public function showActionAction(Action $action)
     {
+        $this->setCurrentNode($action);
+
         return $this->forward($action->getAction(), $action->getParams());
     }
 
@@ -52,5 +58,10 @@ class DefaultController extends Controller
             'image'       => $path_image,
             'description' => $description,
         );
+    }
+
+    protected function setCurrentNode(Node $node)
+    {
+        $this->get('soloist.core.context.navigation')->setCurrent($node);
     }
 }

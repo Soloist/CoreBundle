@@ -4,6 +4,7 @@ namespace Soloist\Bundle\CoreBundle\Entity\Repository;
 
 use Doctrine\ORM\Query\Expr;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Soloist\Bundle\CoreBundle\Entity\Node as NodeEntity;
 
 class Node extends NestedTreeRepository
 {
@@ -23,6 +24,30 @@ class Node extends NestedTreeRepository
     {
         return $this
             ->getRootNodesQueryBuilder()
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
+    /**
+     * Returns the first sub-root ancestor of given node
+     *
+     * @param NodeEntity   $node
+     *
+     * @return NodeEntity
+     */
+    public function findFirstLevelParent(NodeEntity $node)
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.lft <= :lft')
+            ->andWhere('n.rgt >= :rgt')
+            ->andWhere('n.level = 1')
+            ->setParameters(
+                array(
+                    'lft' => $node->getLft(),
+                    'rgt' => $node->getRgt(),
+                )
+            )
             ->getQuery()
             ->getSingleResult()
         ;

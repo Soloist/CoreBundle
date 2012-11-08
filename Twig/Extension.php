@@ -2,8 +2,10 @@
 
 namespace Soloist\Bundle\CoreBundle\Twig;
 
-use Soloist\Bundle\CoreBundle\Block\Factory,
-    Soloist\Bundle\CoreBundle\Router;
+use Soloist\Bundle\CoreBundle\Block\Factory;
+use Soloist\Bundle\CoreBundle\Context\Navigation;
+use Soloist\Bundle\CoreBundle\Entity\Page;
+use Soloist\Bundle\CoreBundle\Router;
 
 class Extension extends \Twig_Extension
 {
@@ -22,10 +24,16 @@ class Extension extends \Twig_Extension
      */
     private $router;
 
-    public function __construct(Factory $factory, Router $router)
+    /**
+     * @var Navigation
+     */
+    private $navigation;
+
+    public function __construct(Factory $factory, Router $router, Navigation $navigation)
     {
         $this->blockFactory = $factory;
         $this->router       = $router;
+        $this->navigation   = $navigation;
     }
 
     public function initRuntime(\Twig_Environment $environment)
@@ -36,9 +44,11 @@ class Extension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'soloist_block_form' => new \Twig_Function_Method($this, 'getBlockTemplateForm', array('is_safe' => array('html'))),
-            'soloist_page_form'  => new \Twig_Function_Method($this, 'getPageTemplateForm',  array('is_safe' => array('html'))),
-            'soloist_path'       => new \Twig_Function_Method($this, 'generateUrl', array('is_safe' => array('html'))),
+            'soloist_block_form'     => new \Twig_Function_Method($this, 'getBlockTemplateForm', array('is_safe' => array('html'))),
+            'soloist_page_form'      => new \Twig_Function_Method($this, 'getPageTemplateForm',  array('is_safe' => array('html'))),
+            'soloist_path'           => new \Twig_Function_Method($this, 'generateUrl', array('is_safe' => array('html'))),
+            'current_slug'           => new \Twig_Function_Method($this, 'getCurrentSlug'),
+            'first_level_identifier' => new \Twig_Function_Method($this, 'getFirstLevelIdentifier'),
         );
     }
 
@@ -57,6 +67,24 @@ class Extension extends \Twig_Extension
     public function generateUrl($node, $absolute = false)
     {
         return $this->router->generate($node, $absolute);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrentSlug()
+    {
+        $node = $this->navigation->getCurrent();
+
+        return $node instanceof Page ? $node->getSlug() : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstLevelIdentifier()
+    {
+        return $this->navigation->getCurrentFirstLevel()->getIdentifier();
     }
 
     public function getName()

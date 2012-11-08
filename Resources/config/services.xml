@@ -19,6 +19,8 @@
         <parameter key="soloist.core.listener.cache.class">Soloist\Bundle\CoreBundle\Cache\NodeCacheListener</parameter>
         <parameter key="soloist.core.listener.node_placement.class">Soloist\Bundle\CoreBundle\EventListener\NodePlacementSubscriber</parameter>
         <parameter key="soloist.core.cache.tree.class">Soloist\Bundle\CoreBundle\Cache\ApcCache</parameter>
+        <parameter key="soloist.core.repository.node.class">Soloist\Bundle\CoreBundle\Entity\Repository\Node</parameter>
+        <parameter key="soloist.core.context.navigation.class">Soloist\Bundle\CoreBundle\Context\Navigation</parameter>
     </parameters>
 
     <services>
@@ -58,6 +60,7 @@
         <service id="soloist.core.twig.extension" class="%soloist.core.twig.extension.class%">
             <argument type="service" id="soloist.block.factory" />
             <argument type="service" id="soloist.core.router" />
+            <argument type="service" id="soloist.core.context.navigation" />
             <tag name="twig.extension" />
         </service>
 
@@ -88,6 +91,15 @@
 
         <service id="soloist.core.listener.node_placement" class="%soloist.core.listener.node_placement.class%" public="false">
             <tag name="doctrine.event_subscriber" />
+        </service>
+
+        <service id="soloist.core.repository.node" class="%soloist.core.repository.node.class%"
+                 factory-service="doctrine.orm.entity_manager" factory-method="getRepository">
+            <argument>SoloistCoreBundle:Node</argument>
+        </service>
+
+        <service id="soloist.core.context.navigation" class="%soloist.core.context.navigation.class%">
+            <argument type="service" id="soloist.core.repository.node" />
         </service>
 
     </services>

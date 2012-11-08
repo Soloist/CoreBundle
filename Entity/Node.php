@@ -2,8 +2,9 @@
 
 namespace Soloist\Bundle\CoreBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection,
-    Doctrine\Common\Util\Inflector;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Util\Inflector;
+use HtmlTools\Inflector as HtmlInflector;
 /**
  * The Node Class do some things...
  *
@@ -282,5 +283,10 @@ abstract class Node
     public function getRefererNode()
     {
         return $this->refererNode;
+    }
+
+    public function getIdentifier()
+    {
+        return HtmlInflector::urlize($this->getTitle());
     }
 }
