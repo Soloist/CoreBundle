@@ -132,7 +132,7 @@ class Factory
     {
         if (isset($this->blockConfig[$type])) {
             $class = $this->blockConfig[$type];
-            return new $class['form_type'];
+            return class_exists($class['form_type']) ? new $class['form_type'] : $class['form_type'];
         }
 
         return null;

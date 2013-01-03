@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+    <entity name="Soloist\Bundle\CoreBundle\Entity\VideoBlock">
+        <field name="ref"      column="ref"      type="string"  />
+        <field name="provider" column="provider" type="string"  />
+    </entity>
+</doctrine-mapping>

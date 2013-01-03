@@ -11,6 +11,7 @@
         <discriminator-map>
             <discriminator-mapping value="text"     class="Soloist\Bundle\CoreBundle\Entity\TextBlock" />
             <discriminator-mapping value="image"    class="Soloist\Bundle\CoreBundle\Entity\ImageBlock" />
+            <discriminator-mapping value="video"    class="Soloist\Bundle\CoreBundle\Entity\VideoBlock" />
         </discriminator-map>
 
         <id name="id" type="integer" column="id">
