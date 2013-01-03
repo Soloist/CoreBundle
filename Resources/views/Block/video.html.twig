@@ -1,0 +1,12 @@
+{% set arguments = {
+    'allowfullscreen': allowfullscreen is defined ? allowfullscreen : true,
+    'width':           width           is defined ? width           : 600,
+    'height':          height          is defined ? height          : 400,
+    'ref':             block.ref
+} %}
+
+{% if block.provider == 'Youtube' %}
+    {% include 'SoloistCoreBundle:Block:youtube.html.twig' with arguments only %}
+{% elseif block.provider == 'Dailymotion' %}
+    {% include 'SoloistCoreBundle:Block:dailymotion.html.twig' with arguments only %}
+{% endif %}
