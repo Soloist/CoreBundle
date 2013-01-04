@@ -3,19 +3,20 @@
 namespace Soloist\Bundle\CoreBundle;
 
 use Doctrine\Common\Util\Inflector;
-
 use Soloist\Bundle\CoreBundle\Entity;
-
-use Symfony\Component\HttpKernel\Exception\HttpException,
-    Symfony\Bundle\FrameworkBundle\Routing\Router as FrameworkRouter;
+use Symfony\Bundle\FrameworkBundle\Routing\Router as FrameworkRouter;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Router
 {
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     * @var FrameworkRouter
      */
     protected $router;
 
+    /**
+     * @param FrameworkRouter $router
+     */
     public function __construct(FrameworkRouter $router)
     {
         $this->router = $router;
@@ -24,11 +25,12 @@ class Router
     /**
      * Generate Url for given node
      *
-     * @param $name
      * @param Entity\Node $node
-     * @param bool $absolute
-     * @return mixed
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @param bool        $absolute
+     *
+     * @return string|null
+     *
+     * @throws HttpException
      */
     public function generate(Entity\Node $node, $absolute = false)
     {
@@ -40,11 +42,23 @@ class Router
         return $this->$method($node, $absolute);
     }
 
+    /**
+     * @param Entity\Page $page
+     * @param bool        $absolute
+     *
+     * @return string
+     */
     protected function generateForPage(Entity\Page $page, $absolute = false)
     {
         return $this->router->generate('soloist_show', array('slug' => $page->getSlug()), $absolute);
     }
 
+    /**
+     * @param Entity\Action $action
+     * @param bool          $absolute
+     *
+     * @return string
+     */
     protected function generateForAction(Entity\Action $action, $absolute = false)
     {
         $params = $action->getParams();
@@ -54,5 +68,18 @@ class Router
         return $this->router->generate($route, $params, $absolute);
     }
 
+    /**
+     * @param Entity\Category $category
+     * @param bool            $absolute
+     *
+     * @return null|string
+     */
+    public function generateForCategory(Entity\Category $category, $absolute = false)
+    {
+        if (0 < count($category->getChildren())) {
+            return $this->generate($category->getChildren()->first(), $absolute);
+        }
 
+        return null;
+    }
 }
