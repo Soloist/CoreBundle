@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PageShortcutType extends AbstractType implements DataTransformerInterface
 {
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     protected $em;
 
@@ -30,12 +30,10 @@ class PageShortcutType extends AbstractType implements DataTransformerInterface
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->appendClientTransformer($this)
-            ->add('page', 'entity', array(
-                'class'  => 'SoloistCoreBundle:Page'
-            ))
+            ->add('page', 'entity', array('class'  => 'SoloistCoreBundle:Page'))
             ->add('path_image')
             ->add('description', 'textarea')
+            ->addViewTransformer($this)
         ;
     }
 

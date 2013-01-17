@@ -2,16 +2,13 @@
 
 namespace Soloist\Bundle\CoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\Request;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Soloist\Bundle\CoreBundle\Event\RequestAction,
-    Soloist\Bundle\CoreBundle\Form\Type\PageType,
-    Soloist\Bundle\CoreBundle\Entity\Node,
-    Soloist\Bundle\CoreBundle\Events;
+use Soloist\Bundle\CoreBundle\Entity\Node;
+use Soloist\Bundle\CoreBundle\Events;
+use Soloist\Bundle\CoreBundle\Event\RequestAction;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {

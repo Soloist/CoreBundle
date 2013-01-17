@@ -2,6 +2,9 @@
 
 namespace Soloist\Bundle\CoreBundle\Entity;
 
+/**
+ * @author Yohan Giarelli <yohan@frequence-web.fr>
+ */
 abstract class Block
 {
     /**
@@ -44,7 +47,7 @@ abstract class Block
     }
 
     /**
-     * @param \Soloist\Bundle\CoreBundle\Entity\Page $node
+     * @param Page $page
      */
     public function setNode(Page $page)
     {
@@ -52,12 +55,15 @@ abstract class Block
     }
 
     /**
-     * @return \Soloist\Bundle\CoreBundle\Entity\Page
+     * @return Page
      */
     public function getPage()
     {
         return $this->page;
     }
 
+    /**
+     * @return string
+     */
     abstract public function getType();
 }

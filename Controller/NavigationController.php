@@ -46,10 +46,19 @@ class NavigationController extends Controller
         if ($root->getLft() + 1 == $root->getRgt()) {
             $root = $node->getParent();
         }
+        $level = $root->getLevel();
+        $nodes = $repo->children($root);
+
+        $nodes = array_filter(
+            $nodes,
+            function(Node $node) use ($level) {
+                return $level + 1 === $node->getLevel();
+            }
+        );
 
         return array(
             'root'    => $root,
-            'nodes'   => $repo->children($root),
+            'nodes'   => $nodes,
             'current' => $node
         );
     }

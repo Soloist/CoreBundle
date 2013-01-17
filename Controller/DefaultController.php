@@ -45,10 +45,12 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Template()
-     * @param $page
-     * @param $path_image
-     * @param $description
+     * @Template
+     *
+     * @param  string $page
+     * @param  string $path_image
+     * @param  string $description
+     *
      * @return array
      */
     public function pageShortcutAction($page, $path_image, $description)
