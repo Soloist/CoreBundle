@@ -31,17 +31,20 @@ class NavigationController extends Controller
 
     /**
      * @Template()
+     *
      * @param Node|int $node
-     * @param int|null $depth
+     * @param int      $maxItems
+     *
      * @return array
      */
-    public function showPartAction($node, $depth = null)
+    public function showPartAction($node, $maxItems = 10)
     {
         $repo = $this->getDoctrine()->getRepository('SoloistCoreBundle:Node');
         if (!$node instanceof Node) {
             $node = $repo->find($node);
         }
 
+        // if node is a leaf, root will be his parent
         $root = $node;
         if ($root->getLft() + 1 == $root->getRgt()) {
             $root = $node->getParent();
@@ -49,12 +52,22 @@ class NavigationController extends Controller
         $level = $root->getLevel();
         $nodes = $repo->children($root);
 
+        // Only keep same level nodes
         $nodes = array_filter(
             $nodes,
             function(Node $node) use ($level) {
                 return $level + 1 === $node->getLevel();
             }
         );
+
+        //Limit results
+        if ($node === $root) {
+            $nodes = array_slice($nodes, 0, $maxItems);
+        } else {
+            $offset = array_search($node, $nodes);
+            $before = floor(($maxItems - 1) / 2);
+            $nodes = array_slice($nodes, $offset - $before > 0 ? $offset - $before : 0, $maxItems);
+        }
 
         return array(
             'root'    => $root,
