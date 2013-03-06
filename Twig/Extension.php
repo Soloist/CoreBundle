@@ -47,6 +47,7 @@ class Extension extends \Twig_Extension
             'soloist_block_form'     => new \Twig_Function_Method($this, 'getBlockTemplateForm', array('is_safe' => array('html'))),
             'soloist_page_form'      => new \Twig_Function_Method($this, 'getPageTemplateForm',  array('is_safe' => array('html'))),
             'soloist_path'           => new \Twig_Function_Method($this, 'generateUrl', array('is_safe' => array('html'))),
+            'current_node'           => new \Twig_Function_Method($this, 'getCurrentNode'),
             'current_slug'           => new \Twig_Function_Method($this, 'getCurrentSlug'),
             'first_level_identifier' => new \Twig_Function_Method($this, 'getFirstLevelIdentifier'),
         );
@@ -77,6 +78,14 @@ class Extension extends \Twig_Extension
         $node = $this->navigation->getCurrent();
 
         return $node instanceof Page ? $node->getSlug() : null;
+    }
+
+    /**
+     * @return \Soloist\Bundle\CoreBundle\Entity\Node
+     */
+    public function getCurrentNode()
+    {
+        return $this->navigation->getCurrent();
     }
 
     /**

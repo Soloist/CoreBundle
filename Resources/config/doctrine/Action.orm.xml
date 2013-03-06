@@ -2,7 +2,8 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
 
-    <entity name="Soloist\Bundle\CoreBundle\Entity\Action">
+    <entity name="Soloist\Bundle\CoreBundle\Entity\Action"
+            repository-class="Soloist\Bundle\CoreBundle\Entity\Repository\Action">
 
         <field name="label"  column="label"  type="string" />
         <field name="action" column="action" type="string" />
