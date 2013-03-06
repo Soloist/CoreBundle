@@ -52,4 +52,18 @@ class Node extends NestedTreeRepository
             ->getSingleResult()
         ;
     }
+
+    /**
+     * @param string $specialKey
+     *
+     * @return NodeEntity
+     */
+    public function findBySpecialKey($specialKey)
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.specialKey = :key')
+            ->setParameter('key', $specialKey)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

@@ -83,6 +83,16 @@ abstract class Node
     protected $title;
 
     /**
+     * @var string
+     */
+    protected $specialKey;
+
+    /**
+     * @var bool
+     */
+    protected $visibleInMenu;
+
+    /**
      * @var \DateTime
      */
     protected $createdAt;
@@ -104,8 +114,9 @@ abstract class Node
 
     public function __construct()
     {
-        $this->children   = new ArrayCollection;
-        $this->isSoftRoot = false;
+        $this->children      = new ArrayCollection;
+        $this->isSoftRoot    = false;
+        $this->visibleInMenu = true;
     }
 
     /**
@@ -207,6 +218,39 @@ abstract class Node
     {
         return $this->title;
     }
+
+    /**
+     * @param string $specialKey
+     */
+    public function setSpecialKey($specialKey)
+    {
+        $this->specialKey = $specialKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpecialKey()
+    {
+        return $this->specialKey;
+    }
+
+    /**
+     * @param boolean $visibleInMenu
+     */
+    public function setVisibleInMenu($visibleInMenu)
+    {
+        $this->visibleInMenu = $visibleInMenu;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleInMenu()
+    {
+        return $this->visibleInMenu;
+    }
+
 
     public function __toString()
     {

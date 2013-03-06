@@ -40,13 +40,22 @@ abstract class NodeType extends AbstractType
     {
         if ($this->needDisplayParent($this->node)) {
             $builder
-                ->add('placementMethod', 'choice', array('choices' => Node::$placementMethods, 'empty_value' => ''))
+                ->add(
+                    'placementMethod',
+                    'choice',
+                    array(
+                        'choices'     => Node::$placementMethods,
+                        'empty_value' => '',
+                        'label'       => 'Méthode de placement'
+                    )
+                )
                 ->add(
                     'refererNode',
                     'entity',
                     array(
                         'class'       => 'SoloistCoreBundle:Node',
                         'empty_value' => '',
+                        'label'       => 'Noeud de référence',
                         'query_builder' => function(EntityRepository $repo) {
                             return $repo->createQueryBuilder('n')->orderBy('n.lft');
                         }
@@ -55,7 +64,9 @@ abstract class NodeType extends AbstractType
         }
 
         $builder
-            ->add('title')
+            ->add('title', null, array('label' => 'Titre'))
+            ->add('specialKey', null, array('label' => 'Clé spéciale', 'required' => false))
+            ->add('visibleInMenu', null, array('label' => 'Visible dans le menu ?', 'required' => false))
         ;
     }
 

@@ -35,8 +35,10 @@
             <gedmo:tree-level />
         </field>
 
-        <field name="title"      column="title"        type="string"  />
-        <field name="isSoftRoot" column="is_soft_root" type="boolean" />
+        <field name="title"         column="title"              type="string"  />
+        <field name="isSoftRoot"    column="is_soft_root"       type="boolean" />
+        <field name="specialKey"    column="special_key"        type="string" nullable="true" />
+        <field name="visibleInMenu" column="is_visible_in_menu" type="boolean" />
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
