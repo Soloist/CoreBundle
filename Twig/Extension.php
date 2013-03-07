@@ -93,7 +93,9 @@ class Extension extends \Twig_Extension
      */
     public function getFirstLevelIdentifier()
     {
-        return $this->navigation->getCurrentFirstLevel()->getIdentifier();
+        $currentFirstLevel = $this->navigation->getCurrentFirstLevel();
+
+        return null === $currentFirstLevel ? 'default' : $currentFirstLevel->getIdentifier();
     }
 
     public function getName()

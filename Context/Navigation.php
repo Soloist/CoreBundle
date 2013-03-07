@@ -52,6 +52,10 @@ class Navigation
      */
     public function getCurrentFirstLevel()
     {
+        if (null === $this->current) {
+            return null;
+        }
+
         return $this->repository->findFirstLevelParent($this->getCurrent());
     }
 }
